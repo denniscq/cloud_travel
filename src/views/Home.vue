@@ -9,14 +9,14 @@
       @getHotels="getHotels"
     ></Search>
     <!-- content area -->
-    <!-- <Main
+    <Main
       class="Main"
       :isLoading="isLoading"
       :selectedCity="selectedCity"
       :rootSource="rootSource"
       @getHotels="getHotels"
     >
-    </Main> -->
+    </Main>
     <!-- bottom bar -->
     <Bottom class="Bottom"></Bottom>
   </div>
@@ -36,7 +36,7 @@ export default {
   components: {
     Top,
     Search,
-    // Main,
+    Main,
     Bottom,
   },
   setup() {
@@ -179,7 +179,7 @@ export default {
 .filter-block {
   background: white;
   min-height: 120px;
-  width: 290px;
+  width: 80%;
   border-radius: 5px;
   display: inline;
 }

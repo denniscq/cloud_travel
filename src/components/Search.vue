@@ -4,7 +4,7 @@
   >
     <div class="hidden-xs-only padding-top-10">
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8" style="position: relative">
+        <el-col :xs="0" :sm="10" :md="10" :lg="10" :xl="10" style="position: relative">
           <img src="../assets/search.png" class="search-icon" />
           <el-select
             filterable
@@ -22,7 +22,7 @@
             />
           </el-select>
         </el-col>
-        <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
+        <el-col :xs="0" :sm="5" :md="5" :lg="5" :xl="5">
           <el-date-picker
             class="date-picker"
             v-model="pickDate"
@@ -32,24 +32,21 @@
             :default-value="[new Date(2023, 5, 10), new Date(2023, 5, 20)]"
           />
         </el-col>
-        <el-col :xs="0" :sm="5" :md="5" :lg="5" :xl="5">
+        <el-col :xs="0" :sm="4" :md="4" :lg="4" :xl="4">
           <el-input
             v-model="inputFilter"
             placeholder="2 adults, 0 children, 1 room"
             class="filter-input"
           />
         </el-col>
-        <el-col :xs="0" :sm="5" :md="5" :lg="5" :xl="5">
+        <el-col :xs="0" :sm="4" :md="4" :lg="4" :xl="4">
           <el-button type="primary" class="search-button" @click="search"
             >Search</el-button
           >
         </el-col>
       </el-row>
     </div>
-    <div
-      class="hidden-sm-and-up"
-      style="display: flex; height: 100%; background: #ffffff"
-    >
+    <div class="hidden-sm-and-up search-phone">
       <div style="padding: 25px">
         <img src="../assets/search.png" class="search-icon-phone" />
       </div>
@@ -141,8 +138,8 @@ export default {
   border: 1px solid #dddddd;
   border-radius: 3px;
   height: 50px;
-  width: 90%;
-  margin-left: 10%;
+  width: 80%;
+  margin-left: 20%;
 }
 
 .city-input input {
@@ -195,7 +192,7 @@ export default {
   height: 15px;
   position: absolute;
   top: 18px;
-  left: 12%;
+  left: 22%;
   z-index: 1001;
 }
 
@@ -209,5 +206,13 @@ export default {
   transform: translateY(0px) !important;
   opacity: 1 !important;
   transition: all 0.3s ease;
+}
+
+.search-phone {
+  border-top: 1px solid #dddddd;;
+  border-bottom: 1px solid #dddddd;
+  display: flex;
+  height: 100%;
+  background: #ffffff;
 }
 </style>

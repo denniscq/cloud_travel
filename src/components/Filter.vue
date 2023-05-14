@@ -218,7 +218,7 @@ export default {
 <style scoped>
 .map-block {
   height: 100px;
-  width: 290px;
+  width: 80%;
   border-radius: 5px;
   position: relative;
   background: white;

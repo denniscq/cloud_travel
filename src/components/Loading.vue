@@ -1,6 +1,6 @@
 <template>
   <div
-    style="height: 100%; width: 100%; display: inline"
+    style="height: 100%; width: 90%; display: block; margin-left: 4%"
     v-for="item in list"
     :key="item"
   >
@@ -47,7 +47,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const list = ref([1, 2, 3]);
+const list = ref([1, 2, 3, 4]);
 </script>
 
 <style></style>

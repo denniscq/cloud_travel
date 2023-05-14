@@ -1,106 +1,132 @@
 <template>
   <div class="main-block">
-    <div class="left-panel">
-      <Filter ref="filterComponent"></Filter>
-    </div>
-    <div class="right-panel">
-      <div class="display-panel">
-        <div class="bar">
-          <div style="width-100" v-if="root">
-            <span v-if="isLoading" class="font-black-16 display-block text-align-left">
-              Finding the best deals...
-            </span>
-            <span v-else class="font-black-16 display-block text-align-left"
-              >{{ selectedCity }}:
-              {{ root.pagination ? root.pagination.totalItems : 0 }} properties found
-            </span>
-
-            <div class="sort-panel">
-              <span
-                v-bind:class="{ selected_sort: currentSort.isPopular }"
-                @click="sortCard('isPopular')"
-                >Popularity</span
-              >
-              <span
-                v-bind:class="{ selected_sort: currentSort.isPrice }"
-                @click="sortCard('isPrice')"
-                >Price(lowest first)
-                <el-icon><CaretBottom /> </el-icon>
-              </span>
-              <span
-                v-bind:class="{ selected_sort: currentSort.isReview }"
-                @click="sortCard('isReview')"
-                >Reviews</span
-              >
-              <span
-                v-bind:class="{ selected_sort: currentSort.isDiscount }"
-                @click="sortCard('isDiscount')"
-                >Discount</span
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="cards">
-          <!-- loading -->
-          <Loading v-if="isLoading"></Loading>
-          <!-- error display -->
-          <template v-if="!isLoading">
-            <!-- error page -->
-            <div
-              v-if="root && !!root.errorMessage"
-              class="font-black-16"
-              style="color: #757575; padding-top: 50px"
-            >
-              <el-icon><Warning /></el-icon>
-              <p>Opps, something went wrong.</p>
-              <p>{{ root.errorMessage }}</p>
-            </div>
-            <!-- have data to display -->
-            <div v-else-if="root.results.length">
-              <div
-                class="card margin-top-10"
-                v-for="(item, index) in root.results"
-                :key="index"
-              >
-                <Card :cardInfo="item" :id="index"></Card>
-              </div>
-            </div>
-            <!-- no data to display -->
-            <div v-else class="font-black-16" style="color: #757575; padding-top: 50px">
-              <el-icon><Search /></el-icon>
-              <p>Sorry! We cloudn't find any properties for your search.</p>
-            </div>
-          </template>
-          <!-- 分页 -->
-          <div
-            v-if="
-              !isLoading &&
-              root &&
-              !root.errorMessage &&
-              root.results &&
-              root.results.length
-            "
-            style="margin: 10px 0"
-          >
-            <span class="font-blue-12" style="float: left" @click="goTop($event)">
-              Back to top
-            </span>
-            <span class="font-grey-12" style="color: #cccccc" v-if="root.pagination">
-              Showing Results {{ root.pagination.showing[0] }} -
-              {{ root.pagination.showing[1] }} of {{ root.pagination.totalItems }}
-            </span>
-            <el-pagination
-              small
-              layout="prev, pager, next"
-              :total="100"
-              v-model:current-page="currentPage"
-              @current-change="switchPage($event)"
-            />
-          </div>
-        </div>
+    <div class="hidden-sm-and-up sort-filter-phone font-white-14">
+      <div>
+        <!-- <img src="../assets/sort.png" /> image invalid -->
+        <el-icon><Sort /></el-icon>
+        Sort & Filter
+      </div>
+      <div>
+        <!-- <img src="../assets/position.png"  /> -->
+        <el-icon><Location /></el-icon>
+        Map View
       </div>
     </div>
+    <div class="hidden-sm-and-up select-phone font-white-14">
+      <span class="margin-left-10">Select One</span>
+      <img src="../assets/arrow_down.png" class="arrow_down" />
+    </div>
+
+    <el-row>
+      <el-col :xs="0" :sm="8" :md="8" :lg="8" :xl="8" class="left-panel hidden-xs-only">
+        <Filter ref="filterComponent"></Filter>
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="16"
+        :md="16"
+        :lg="16"
+        :xl="16"
+        class="right-panel"
+      >
+        <div class="display-panel">
+          <div class="bar">
+            <div style="width:90%; margin-left: 4%" v-if="root">
+              <span v-if="isLoading" class="font-black-16 display-block text-align-left">
+                Finding the best deals...
+              </span>
+              <span v-else class="font-black-16 display-block text-align-left"
+                >{{ selectedCity }}:
+                {{ root.pagination ? root.pagination.totalItems : 0 }} properties found
+              </span>
+
+              <div class="sort-panel hidden-xs-only">
+                <span
+                  v-bind:class="{ selected_sort: currentSort.isPopular }"
+                  @click="sortCard('isPopular')"
+                  >Popularity</span
+                >
+                <span
+                  v-bind:class="{ selected_sort: currentSort.isPrice }"
+                  @click="sortCard('isPrice')"
+                  >Price(lowest first)
+                  <el-icon><CaretBottom /> </el-icon>
+                </span>
+                <span
+                  v-bind:class="{ selected_sort: currentSort.isReview }"
+                  @click="sortCard('isReview')"
+                  >Reviews</span
+                >
+                <span
+                  v-bind:class="{ selected_sort: currentSort.isDiscount }"
+                  @click="sortCard('isDiscount')"
+                  >Discount</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="cards">
+            <!-- loading -->
+            <Loading v-if="isLoading"></Loading>
+            <!-- error display -->
+            <template v-if="!isLoading">
+              <!-- error page -->
+              <div
+                v-if="root && !!root.errorMessage"
+                class="font-black-16"
+                style="color: #757575; padding-top: 50px"
+              >
+                <el-icon><Warning /></el-icon>
+                <p>Opps, something went wrong.</p>
+                <p>{{ root.errorMessage }}</p>
+              </div>
+              <!-- have data to display -->
+              <div v-else-if="root.results.length">
+                <div
+                  class="card margin-top-10"
+                  v-for="(item, index) in root.results"
+                  :key="index"
+                >
+                  <Card :cardInfo="item" :id="index"></Card>
+                </div>
+              </div>
+              <!-- no data to display -->
+              <div v-else class="font-black-16" style="color: #757575; padding-top: 50px">
+                <el-icon><Search /></el-icon>
+                <p>Sorry! We cloudn't find any properties for your search.</p>
+              </div>
+            </template>
+            <!-- 分页 -->
+            <div
+              v-if="
+                !isLoading &&
+                root &&
+                !root.errorMessage &&
+                root.results &&
+                root.results.length
+              "
+              style="margin: 10px 0"
+            >
+              <span class="font-blue-12" style="float: left" @click="goTop($event)">
+                Back to top
+              </span>
+              <span class="font-grey-12" style="color: #cccccc" v-if="root.pagination">
+                Showing Results {{ root.pagination.showing[0] }} -
+                {{ root.pagination.showing[1] }} of {{ root.pagination.totalItems }}
+              </span>
+              <el-pagination
+                small
+                layout="prev, pager, next"
+                :total="100"
+                v-model:current-page="currentPage"
+                @current-change="switchPage($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -236,12 +262,11 @@ export default {
 
 .main-block {
   position: relative;
-  display: inline-flex;
 }
 .left-panel {
   display: inline-flex;
   height: 100%;
-  width: 350px;
+  width: 80%;
   flex-direction: column;
   align-items: flex-end;
   background: transparent;
@@ -249,7 +274,7 @@ export default {
 .right-panel {
   display: inline;
   height: 100%;
-  width: 900px;
+  width: 80%;
   float: right;
 }
 .slider-demo-block {
@@ -267,7 +292,6 @@ export default {
 }
 
 .sort-panel {
-  width: 850px;
   display: flex;
   justify-content: space-between;
 }
@@ -305,12 +329,12 @@ export default {
 
 .cards {
   width: 100%;
-  /* background-color: beige; */
 }
 
 .card {
   height: 230px;
-  width: 850px;
+  width: 90%;
+  margin-left: 4%;
   background: #ffffff;
   display: flex;
   border-radius: 5px;
@@ -336,5 +360,40 @@ export default {
 ::v-deep .el-pager li.active {
   background-color: #002d63 !important;
   color: #ffffff;
+}
+
+.sort-filter-phone {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  line-height: 20px;
+  text-align: center;
+  color: #002d63 !important;
+  background: #ffffff;
+}
+
+.sort-filter-phone > div {
+  width: 50%;
+  position: relative;
+  padding-top: 15px;
+}
+
+.sort-filter-phone > div:first-child {
+  border-right: 1px solid #dddddd;
+}
+
+.select-phone {
+  width: 100%;
+  background: #002d63;
+  display: flex;
+  justify-content: space-between;
+  line-height: 30px;
+}
+
+.arrow_down {
+  width: 12px;
+  height: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 </style>

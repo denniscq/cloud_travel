@@ -1,7 +1,9 @@
 <template>
   <div class="card-left">
-    <img :src="cardInfo.property.heroImage.url" class="img-top" />
-    <div style="display: flex; flex-wrap: wrap">
+    <div style="width: 100%; height: 180px">
+      <img :src="cardInfo.property.heroImage.url" class="img-top" />
+    </div>
+    <div style="display: flex; flex-wrap: wrap" class="hidden-xs-only">
       <template v-for="(gallery, index) in cardInfo.property.gallery" :key="index">
         <template v-if="index < 4">
           <img
@@ -48,7 +50,9 @@
       {{ cardInfoRef.property.location.city }}.
       {{ cardInfoRef.property.location.country }}.
       {{ cardInfoRef.property.location.postalCode }}
-      (<span>View map</span>)
+      (<span style="color: #002d63 !important; cursor: pointer" class="font-grey-12"
+        >View map</span
+      >)
     </div>
     <div class="row-3 text-align-left padding-left-10 font-grey-12">
       <span v-if="cardInfoRef.property.reviews && cardInfoRef.property.reviews.summary">{{
@@ -82,17 +86,13 @@
         >{{ cardInfoRef.property.covidSafety }}
       </span>
     </div>
-  </div>
-  <div class="card-right">
-    <img
-      src="../assets/excellent.png"
-      alt="Excellent"
-      class="margin-top-10 margin-right-10"
-    />
+
+    <div class="hidden-xs-only" style="position: absolute; top: 10px; right: 3%">
+      <img src="../assets/excellent.png" alt="Excellent" />
+    </div>
+
     <div class="discount-panel">
-      <p v-show="discountRate" class="font-grey-12">
-        SAVE {{ discountRate }}% TODAY!
-      </p>
+      <p v-show="discountRate" class="font-grey-12">SAVE {{ discountRate }}% TODAY!</p>
       <p class="font-grey-12">Nightly avg.</p>
       <p>
         <span
@@ -219,17 +219,18 @@ export default {
 
 <style scoped>
 .card-left {
-  width: 200px;
+  width: 26%;
   height: 100%;
 }
 
 .card-middle {
-  width: 500px;
+  width: 74%;
   height: 100%;
+  position: relative;
 }
 
 .card-right {
-  width: 150px;
+  width: 14%;
   height: 100%;
   position: relative;
 }
@@ -240,6 +241,7 @@ export default {
   text-overflow: ellipsis;
   color: #333333 !important;
   max-height: 32px;
+  max-width: 80%;
 }
 
 .row-2 {
@@ -249,6 +251,7 @@ export default {
   text-overflow: ellipsis;
   max-height: 32px;
   color: #333333 !important;
+  max-width: 80%;
 }
 .row-3 {
   line-height: 32px;
@@ -256,6 +259,7 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  max-width: 80%;
 }
 .row-4 {
   line-height: 32px;
@@ -263,6 +267,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-height: 32px;
+  max-width: 80%;
 }
 .row-5 {
   line-height: 32px;
@@ -272,6 +277,7 @@ export default {
   max-height: 32px;
   color: #333333 !important;
   position: relative;
+  max-width: 80%;
 }
 
 .tag {
@@ -292,36 +298,36 @@ export default {
 }
 
 .img-top {
-  width: 200px;
-  height: 170px;
   object-fit: fill;
+  width: 100%;
+  height: 170px;
 }
 
 .img-bottom {
-  width: 48px;
-  height: 52px;
+  width: 47px;
+  height: 50px;
   object-fit: cover;
   padding: 0 1px;
 }
 
-.card-right p {
+p {
   margin: 0;
   line-height: 16px;
 }
 
-.card-right p:first-child {
+p:first-child {
   background: #00a1e6;
   color: #ffffff !important;
   width: fit-content;
   margin-bottom: 10px;
 }
 
-.card-right > .discount-panel {
+.discount-panel {
   height: 100px;
   width: 100%;
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 3%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
