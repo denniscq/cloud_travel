@@ -3,11 +3,11 @@
     <!-- nav bar -->
     <Top class="Top"></Top>
     <!-- search bar -->
-    <!-- <Search
+    <Search
       class="Search"
       :selectedCity="selectedCity"
       @getHotels="getHotels"
-    ></Search> -->
+    ></Search>
     <!-- content area -->
     <!-- <Main
       class="Main"
@@ -35,8 +35,8 @@ export default {
   name: 'Home',
   components: {
     Top,
+    Search,
     // Main,
-    // Search,
     Bottom,
   },
   setup() {
@@ -229,6 +229,16 @@ export default {
   line-height: 16px;
   /* identical to box height, or 133% */
   color: #757575;
+}
+
+.font-black-12 {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 133% */
+  color: #000000;
 }
 
 .font-black-16 {

@@ -1,41 +1,65 @@
 <template>
   <div
-    class="search-block"
     :class="{ animation_moveup: scrollSwitch && isActive, animation_movedown: !isActive }"
   >
-    <Search class="icon-search" />
-    <el-select
-      filterable
-      placeholder="input city"
-      remote-show-suffix="false"
-      class="place-input"
-      v-model="currentCity"
-      @change="changeSelect"
+    <div class="hidden-xs-only padding-top-10">
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8" style="position: relative">
+          <img src="../assets/search.png" class="search-icon" />
+          <el-select
+            filterable
+            placeholder="input city"
+            remote-show-suffix="false"
+            class="city-input"
+            v-model="currentCity"
+            @change="changeSelect"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.cityCode"
+              :label="item.label"
+              :value="item.cityCode"
+            />
+          </el-select>
+        </el-col>
+        <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
+          <el-date-picker
+            class="date-picker"
+            v-model="pickDate"
+            type="daterange"
+            start-placeholder="Start Date"
+            end-placeholder="End Date"
+            :default-value="[new Date(2023, 5, 10), new Date(2023, 5, 20)]"
+          />
+        </el-col>
+        <el-col :xs="0" :sm="5" :md="5" :lg="5" :xl="5">
+          <el-input
+            v-model="inputFilter"
+            placeholder="2 adults, 0 children, 1 room"
+            class="filter-input"
+          />
+        </el-col>
+        <el-col :xs="0" :sm="5" :md="5" :lg="5" :xl="5">
+          <el-button type="primary" class="search-button" @click="search"
+            >Search</el-button
+          >
+        </el-col>
+      </el-row>
+    </div>
+    <div
+      class="hidden-sm-and-up"
+      style="display: flex; height: 100%; background: #ffffff"
     >
-      <el-option
-        v-for="item in options"
-        :key="item.cityCode"
-        :label="item.label"
-        :value="item.cityCode"
-      />
-    </el-select>
-
-    <el-date-picker
-      class="date-picker"
-      v-model="pickDate"
-      type="daterange"
-      start-placeholder="Start Date"
-      end-placeholder="End Date"
-      :default-value="[new Date(2023, 5, 10), new Date(2023, 5, 20)]"
-    />
-
-    <el-input
-      v-model="inputFilter"
-      placeholder="2 adults, 0 children, 1 room"
-      class="filter-input"
-    />
-
-    <el-button type="primary" class="search-button" @click="search">Search</el-button>
+      <div style="padding: 25px">
+        <img src="../assets/search.png" class="search-icon-phone" />
+      </div>
+      <div style="width: 100%; text-align: left" class="padding-top-10">
+        <span class="font-black-16 display-block">{{ currentCityDisplay }}</span>
+        <span class="font-black-12 display-block"
+          >Aug 18 - Aug 19 2 adults, 0 children, 1 room</span
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,6 +76,7 @@ export default {
     const options = ref([]);
     const inputFilter = ref('');
     const currentCity = ref('');
+    const currentCityDisplay = ref('');
 
     const { selectedCity } = toRefs(props);
     currentCity.value = selectedCity.value;
@@ -73,6 +98,10 @@ export default {
     onBeforeMount(async () => {
       const result = await hotelService.getCitys();
       options.value.push(...result);
+
+      currentCityDisplay.value = result.find(
+        (p) => p.cityCode === currentCity.value
+      ).label;
     });
 
     /**
@@ -94,6 +123,7 @@ export default {
       inputFilter,
       pickDate,
       options,
+      currentCityDisplay,
       changeSelect,
       search,
       currentCity,
@@ -105,46 +135,33 @@ export default {
 </script>
 
 <style>
-.search-block {
-  position: relative;
-}
-.place-input {
+.city-input {
   box-sizing: border-box;
-  position: absolute;
-  left: 145px;
-  top: 10px;
   background: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  width: 370px;
   height: 50px;
+  width: 90%;
+  margin-left: 10%;
 }
 
-.place-input input {
+.city-input input {
   height: 50px;
   padding-left: 25px;
 }
 
 .date-picker {
   box-sizing: border-box;
-  position: absolute;
-  left: 525px;
-  top: 10px;
-  /* white */
   background: #ffffff;
-  /* line */
   border: 1px solid #dddddd;
   border-radius: 3px;
   height: 50px;
-  width: 210px !important;
+  width: 100% !important;
 }
 
 .filter-input {
-  position: absolute;
   height: 50px;
-  width: 200px;
-  left: 745px;
-  top: 10px;
+  width: 100%;
   border-radius: 3px;
 }
 
@@ -153,13 +170,11 @@ export default {
 }
 
 .search-button {
-  position: absolute;
   background: #00a1e6;
   border-radius: 3px;
   height: 50px;
-  width: 150px;
-  left: 955px;
-  top: 10px;
+  width: 80%;
+  margin-right: 20%;
   border-radius: 3px;
 }
 
@@ -175,13 +190,12 @@ export default {
   color: #ffffff;
 }
 
-.icon-search {
-  width: 1em;
-  height: 1em;
-  margin-right: 8px;
+.search-icon {
+  width: 15px;
+  height: 15px;
   position: absolute;
-  left: 150px;
-  top: 28px;
+  top: 18px;
+  left: 12%;
   z-index: 1001;
 }
 
