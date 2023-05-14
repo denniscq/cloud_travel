@@ -3,8 +3,12 @@
     <!-- nav bar -->
     <Top class="Top"></Top>
     <!-- search bar -->
-    <Search class="Search" :selectedCity="selectedCity" @getHotels="getHotels"></Search>
-    <!-- main content area -->
+    <Search
+      class="Search"
+      :selectedCity="selectedCity"
+      @getHotels="getHotels"
+    ></Search>
+    <!-- content area -->
     <Main
       class="Main"
       :isLoading="isLoading"
@@ -19,7 +23,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Main from '@/components/Main.vue';
 import Bottom from '@/components/Bottom.vue';
 import Top from '@/components/Top.vue';
@@ -53,14 +56,19 @@ export default {
         console.log('home:', selectedCity.value);
       }
 
-      // get all root source (hotels) through remote API.
+      /**
+       * @deprecated get all root data source (hotels) through remote API.
+       */
       await hotelService
         .getHotels(selectedCity.value)
         .then((res) => {
           if (res.data.status === 400) {
             rootSource.value = { errorMessage: res.data.message };
           } else if (ifRunnFilter) {
-            const filledResults = filterService.filter(newValue, res.data.outlets.availability);
+            const filledResults = filterService.filter(
+              newValue,
+              res.data.outlets.availability
+            );
             rootSource.value.results = filledResults;
           } else {
             rootSource.value = res.data.outlets.availability;
@@ -113,11 +121,14 @@ export default {
   height: 70px;
   background: #002d63;
   border-radius: 3px;
+  position: fixed;
+  z-index: 1002;
 }
 
 .Main {
   width: 100%;
   min-height: calc(100% - 260px);
+  margin-top: 70px;
 }
 
 .Bottom {

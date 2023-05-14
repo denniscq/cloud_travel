@@ -1,5 +1,8 @@
 <template>
-  <div class="search-block">
+  <div
+    class="search-block"
+    :class="{ animation_moveup: scrollSwitch && isActive, animation_movedown: !isActive }"
+  >
     <Search class="icon-search" />
     <el-select
       filterable
@@ -37,7 +40,7 @@
 </template>
 
 <script>
-import { onBeforeMount, ref, toRefs } from 'vue';
+import { onBeforeMount, onMounted, ref, toRefs } from 'vue';
 import hotelService from '@/services/hotelService';
 
 export default {
@@ -53,14 +56,6 @@ export default {
     const { selectedCity } = toRefs(props);
     currentCity.value = selectedCity.value;
 
-    /**
-     * @inital get all city name nad city code through remote api.
-     */
-    onBeforeMount(async () => {
-      const result = await hotelService.getCitys();
-      options.value.push(...result);
-    });
-
     const changeSelect = (city) => {
       console.log('changeselect:', city);
       currentCity.value = city;
@@ -72,6 +67,29 @@ export default {
       context.emit('getHotels', currentCity.value);
     };
 
+    /**
+     * @inital get all city name nad city code through remote api.
+     */
+    onBeforeMount(async () => {
+      const result = await hotelService.getCitys();
+      options.value.push(...result);
+    });
+
+    /**
+     * @description add eventlistener to move search bar to top position.
+     */
+    const scrollSwitch = ref(false);
+    const isActive = ref(false);
+    onMounted(() => {
+      window.scrollTo(0, 0);
+      window.addEventListener('scroll', ($event) => {
+        if (!scrollSwitch.value && window.pageYOffset >= 35) {
+          scrollSwitch.value = true;
+        }
+        isActive.value = window.pageYOffset >= 35;
+      });
+    });
+
     return {
       inputFilter,
       pickDate,
@@ -79,6 +97,8 @@ export default {
       changeSelect,
       search,
       currentCity,
+      isActive,
+      scrollSwitch,
     };
   },
 };
@@ -174,5 +194,17 @@ export default {
   left: 150px;
   top: 28px;
   z-index: 1001;
+}
+
+.animation_moveup {
+  transform: translateY(-70px) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease;
+}
+
+.animation_movedown {
+  transform: translateY(0px) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease;
 }
 </style>
