@@ -1,0 +1,23 @@
+<template>
+  <router-view />
+</template>
+
+<style>
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #E5E5E5;
+  text-align: center;
+}
+</style>
