@@ -3,20 +3,20 @@
     <!-- nav bar -->
     <Top class="Top"></Top>
     <!-- search bar -->
-    <Search
+    <!-- <Search
       class="Search"
       :selectedCity="selectedCity"
       @getHotels="getHotels"
-    ></Search>
+    ></Search> -->
     <!-- content area -->
-    <Main
+    <!-- <Main
       class="Main"
       :isLoading="isLoading"
       :selectedCity="selectedCity"
       :rootSource="rootSource"
       @getHotels="getHotels"
     >
-    </Main>
+    </Main> -->
     <!-- bottom bar -->
     <Bottom class="Bottom"></Bottom>
   </div>
@@ -35,8 +35,8 @@ export default {
   name: 'Home',
   components: {
     Top,
-    Main,
-    Search,
+    // Main,
+    // Search,
     Bottom,
   },
   setup() {
@@ -114,6 +114,7 @@ export default {
   height: 70px;
   background: #ffffff;
   position: relative;
+  text-align: left;
 }
 
 .Search {

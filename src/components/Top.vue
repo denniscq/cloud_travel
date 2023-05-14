@@ -1,41 +1,50 @@
 <template>
   <div>
-    <img src="../assets/cloudtravel-logo.jpg" />
     <div class="top-right">
-      <el-dropdown>
-        <span class="el-dropdown-link">
-          English
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item v-for="(item, index) in languages" :key="index">{{
-              item
-            }}</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-
-      <el-dropdown>
-        <span class="el-dropdown-link">
-          USD
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item v-for="(item, index) in currency" :key="index">{{
-              item
-            }}</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-
-      <span>My Account</span>
-      <span>Log Out</span>
+      <el-row>
+        <el-col :xs="16" :sm="8" :md="8" :lg="8" :xl="8" style="padding-top: 17px">
+          <img src="../assets/cloudtravel-logo.jpg" class="logo" />
+        </el-col>
+        <el-col :xs="8" :sm="16" :md="16" :lg="16" :xl="16" style="padding: 25px">
+          <div class="hidden-xs-only" style="padding-right: 100px">
+            <el-dropdown>
+              English
+              <el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item v-for="(item, index) in languages" :key="index">{{
+                    item
+                  }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <el-dropdown>
+              USD
+              <el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item v-for="(item, index) in currency" :key="index">{{
+                    item
+                  }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <span>My Account</span>
+            <span>Log Out</span>
+          </div>
+          <div class="hidden-sm-and-up">
+            <img
+              src="../assets/menu.png"
+              class="safe"
+              style="width: 18.75px; height: 16.5px"
+            />
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -53,22 +62,17 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
-img {
-  position: absolute;
-  width: 227.5px;
-  height: 35px;
-  left: 147px;
-  top: 13px;
+.logo {
   object-fit: cover;
+  width: 240px;
+  height: 36px;
+}
+
+.el-row {
+  height: 100%;
 }
 
 .el-dropdown {
-  cursor: pointer;
-  color: #000000;
-  padding-right: 10px;
-}
-
-.top-right span {
   cursor: pointer;
   color: #000000;
   padding-right: 10px;
@@ -80,25 +84,11 @@ img {
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  /* identical to box height */
-
-  display: flex;
   align-items: flex-end;
   text-align: right;
   letter-spacing: 0.01em;
-
-  /* 000 */
-
   color: #000000;
-  position: absolute;
-  /* left: 68.12%; */
-  /* right: 9.31%; */
-  /* top: 35.18%; */
-  /* bottom: 32%; */
-  height: 20px;
-  width: 325px;
-  left: 850px;
-  top: 21.435546875px;
   border-radius: 3px;
+  height: 100%;
 }
 </style>

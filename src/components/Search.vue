@@ -154,11 +154,6 @@ export default {
 
 .search-button {
   position: absolute;
-  /* left: 79.51%;
-  right: 10.07%;
-  top: 14.29%;
-  bottom: 14.29%; */
-  /* blue 2 */
   background: #00a1e6;
   border-radius: 3px;
   height: 50px;
@@ -169,20 +164,14 @@ export default {
 }
 
 .search-button > span {
-  /* height: 22.5px; */
-  /* width: 78.33333587646484px;
-  left: 1181.666748046875px; */
-  /* top: 22.5px; */
   font-family: 'Mulish';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 23px;
-  /* identical to box height */
   display: flex;
   align-items: flex-end;
   text-align: center;
-  /* white */
   color: #ffffff;
 }
 

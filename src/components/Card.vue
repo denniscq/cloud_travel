@@ -77,7 +77,7 @@
       </el-tooltip>
     </div>
     <div class="row-5 text-align-left font-grey-12 padding-left-10">
-      <img src="../assets/Vector.png" class="vector" />
+      <img src="../assets/safe.png" class="safe" />
       <span v-if="cardInfoRef.property.covidSafety" style="padding-left: 25px"
         >{{ cardInfoRef.property.covidSafety }}
       </span>
@@ -284,7 +284,7 @@ export default {
   cursor: pointer;
 }
 
-.vector {
+.safe {
   height: 20px;
   width: 16px;
   position: absolute;
