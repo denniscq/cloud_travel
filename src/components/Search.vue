@@ -50,7 +50,11 @@
       <div style="padding: 25px">
         <img src="../assets/search.png" class="search-icon-phone" />
       </div>
-      <div style="width: 100%; text-align: left" class="padding-top-10">
+      <div
+        style="width: 100%; text-align: left"
+        class="padding-top-10"
+        @click="GOSearchPage()"
+      >
         <span class="font-black-16 display-block">{{ currentCityDisplay }}</span>
         <span class="font-black-12 display-block"
           >Aug 18 - Aug 19 2 adults, 0 children, 1 room</span
@@ -63,12 +67,14 @@
 <script>
 import { onBeforeMount, onMounted, ref, toRefs } from 'vue';
 import hotelService from '@/services/hotelService';
+import { useRouter } from 'vue-router';
 
 export default {
   props: {
     selectedCity: String,
   },
   setup(props, context) {
+    const router = useRouter();
     const pickDate = ['2023-05-10', '2010-05-20'];
     const options = ref([]);
     const inputFilter = ref('');
@@ -116,6 +122,10 @@ export default {
       });
     });
 
+    const GOSearchPage = () => {
+      router.push('/phoneSearch');
+    };
+
     return {
       inputFilter,
       pickDate,
@@ -126,12 +136,13 @@ export default {
       currentCity,
       isActive,
       scrollSwitch,
+      GOSearchPage,
     };
   },
 };
 </script>
 
-<style>
+<style scoped>
 .city-input {
   box-sizing: border-box;
   background: #ffffff;
@@ -143,7 +154,7 @@ export default {
 }
 
 .city-input input {
-  height: 50px;
+  height: 50px !important;
   padding-left: 25px;
 }
 
@@ -153,7 +164,7 @@ export default {
   border: 1px solid #dddddd;
   border-radius: 3px;
   height: 50px;
-  width: 100% !important;
+  width: 50% !important;
 }
 
 .filter-input {
@@ -192,7 +203,7 @@ export default {
   height: 15px;
   position: absolute;
   top: 18px;
-  left: 22%;
+  left: 21%;
   z-index: 1001;
 }
 
@@ -209,10 +220,21 @@ export default {
 }
 
 .search-phone {
-  border-top: 1px solid #dddddd;;
+  border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   display: flex;
   height: 100%;
   background: #ffffff;
+}
+:deep .el-input__inner {
+  height: 50px;
+  width: 100%;
+}
+
+:deep .city-input .el-input .el-input__inner{
+  margin-left: 10px;
+  border: 0;
+  border-radius: 0%;
+  background: transparent;
 }
 </style>

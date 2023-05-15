@@ -1,10 +1,10 @@
 <template>
-  <div class="filter-block margin-right-10 margin-top-10">
+  <div class="filter-block margin-top-10">
     <div class="title">
-      <p class="font-black-14 padding-left-10">{{ sectionTitle }}</p>
-      <p class="font-blue-12 padding-right-10" @click="clear">CLEAR</p>
+      <span class="font-black-14 padding-left-10">{{ sectionTitle }}</span>
+      <span class="font-blue-12 margin-right-10" @click="clear">CLEAR</span>
     </div>
-    <div style="width-100">
+    <div class='width-100 margin-top-10'>
       <el-checkbox-group v-model="selectReviews" @change="handleChange($event)">
         <div
           v-for="(checkItem, index) in visibleCheckList"

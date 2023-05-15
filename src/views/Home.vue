@@ -3,11 +3,7 @@
     <!-- nav bar -->
     <Top class="Top"></Top>
     <!-- search bar -->
-    <Search
-      class="Search"
-      :selectedCity="selectedCity"
-      @getHotels="getHotels"
-    ></Search>
+    <Search class="Search" :selectedCity="selectedCity" @getHotels="getHotels"></Search>
     <!-- content area -->
     <Main
       class="Main"
@@ -30,6 +26,7 @@ import Search from '@/components/Search.vue';
 import { ref, onBeforeMount, provide } from 'vue';
 import hotelService from '@/services/hotelService';
 import filterService from '@/services/filterService';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'Home',
@@ -40,10 +37,14 @@ export default {
     Bottom,
   },
   setup() {
+    const route = useRoute();
     const selectedCity = ref('sgsg');
     const rootSource = ref([]);
     const isLoading = ref(true);
 
+    /**
+     * @deprecated get all root data source (hotels) through remote API.
+     */
     const getHotels = async (newValue) => {
       isLoading.value = true;
       console.log('isloading', isLoading.value);
@@ -56,9 +57,6 @@ export default {
         console.log('home:', selectedCity.value);
       }
 
-      /**
-       * @deprecated get all root data source (hotels) through remote API.
-       */
       await hotelService
         .getHotels(selectedCity.value)
         .then((res) => {
@@ -88,7 +86,8 @@ export default {
     };
 
     onBeforeMount(async () => {
-      await getHotels(false);
+      console.log('route', route.params.city);
+      await getHotels(route.params.city);
     });
 
     provide('getHotels', getHotels);
@@ -143,125 +142,16 @@ export default {
   width: 100%;
   height: 30px;
   display: inline-flex;
-  justify-content: space-between;
 }
 
-.margin-right-10 {
-  margin-right: 10px;
-}
-
-.margin-top-10 {
-  margin-top: 10px;
-}
-
-.padding-top-10 {
-  padding-top: 10px;
-}
-
-.font-white-14 {
-  color: #ffffff;
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 16px;
-}
-
-.font-white-18 {
-  color: #ffffff;
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 20px;
-}
-
-.filter-block {
-  background: white;
-  min-height: 120px;
-  width: 80%;
-  border-radius: 5px;
-  display: inline;
-}
-
-.margin-right-10 {
-  margin-right: 10px;
-}
-
-.margin-top-10 {
-  margin-top: 10px;
-}
-
-.margin-left-10 {
-  margin-left: 10px;
-}
-
-.padding-top-10 {
-  padding-top: 10px;
-}
-
-.padding-left-10 {
-  padding-left: 10px;
-}
-
-.padding-right-10 {
+.title > span {
+  width: 50%;
+  line-height: 30px;
+  text-align: left;
   padding-right: 10px;
 }
 
-.font-blue-12 {
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 20px;
-  /* identical to box height, or 167% */
-  text-transform: uppercase;
-  /* blue 1 */
-  color: #002d63;
-  cursor: pointer;
-}
-
-.font-grey-12 {
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  /* identical to box height, or 133% */
-  color: #757575;
-}
-
-.font-black-12 {
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  /* identical to box height, or 133% */
-  color: #000000;
-}
-
-.font-black-16 {
-  font-family: Mulish;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 32px;
-  color: #000000;
-}
-
-.display-block {
-  display: block;
-}
-
-.text-align-left {
-  text-align: left;
-}
-.text-align-center {
-  text-align: center;
-}
-
-.width-100 {
-  width: 100%;
+.title > span:last-child {
+  text-align: right;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div class="main-block">
     <div class="hidden-sm-and-up sort-filter-phone font-white-14">
-      <div>
+      <div @click="GOSortPage()">
         <!-- <img src="../assets/sort.png" /> image invalid -->
         <el-icon><Sort /></el-icon>
         Sort & Filter
       </div>
-      <div>
+      <div @click="GOMapPage()">
         <!-- <img src="../assets/position.png"  /> -->
         <el-icon><Location /></el-icon>
         Map View
@@ -21,23 +21,16 @@
       <el-col :xs="0" :sm="8" :md="8" :lg="8" :xl="8" class="left-panel hidden-xs-only">
         <Filter ref="filterComponent"></Filter>
       </el-col>
-      <el-col
-        :xs="24"
-        :sm="16"
-        :md="16"
-        :lg="16"
-        :xl="16"
-        class="right-panel"
-      >
+      <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16" class="right-panel">
         <div class="display-panel">
           <div class="bar">
-            <div style="width:90%; margin-left: 4%" v-if="root">
+            <div style="width: 90%; margin-left: 4%" v-if="root">
               <span v-if="isLoading" class="font-black-16 display-block text-align-left">
                 Finding the best deals...
               </span>
               <span v-else class="font-black-16 display-block text-align-left"
                 >{{ selectedCity }}:
-                {{ root.pagination ? root.pagination.totalItems : 0 }} properties found
+                {{ root && root.results ? root.results.length : 0 }} properties found
               </span>
 
               <div class="sort-panel hidden-xs-only">
@@ -88,7 +81,7 @@
                   v-for="(item, index) in root.results"
                   :key="index"
                 >
-                  <Card :cardInfo="item" :id="index"></Card>
+                  <Card :cardInfo="item"></Card>
                 </div>
               </div>
               <!-- no data to display -->
@@ -131,12 +124,21 @@
 </template>
 
 <script>
-import { ref, reactive, watch, toRefs, watchEffect, ssrContextKey } from 'vue';
+import {
+  ref,
+  reactive,
+  watch,
+  toRefs,
+  watchEffect,
+  ssrContextKey,
+  getCurrentInstance,
+} from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import Filter from '@/components/Filter.vue';
 import Loading from '@/components/Loading.vue';
 import Card from '@/components/Card.vue';
 import sortService from '@/services/sortService';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Main',
@@ -153,7 +155,7 @@ export default {
   },
   setup(props, content) {
     console.log('main:', props);
-
+    const router = useRouter();
     const filterComponent = ref();
     const { rootSource, selectedCity, isLoading } = toRefs(props);
     const root = ref({});
@@ -163,7 +165,7 @@ export default {
     });
 
     /**
-     * @description change sort approach
+     * @description change sort approach and reload card dispaly.
      * highlight select sort approach.
      */
     const currentSort = reactive({
@@ -180,7 +182,8 @@ export default {
 
       currentSort[sortName] = true;
       try {
-        sortService.sort(sortName, rootSource.value);
+        const sortedReuslt = sortService.sort(sortName, rootSource.value);
+        root.value.results = sortedReuslt;
       } catch (error) {
         console.log(
           `an error has been occurred while filtering data by condition, details is ${error}`
@@ -219,6 +222,22 @@ export default {
     };
 
     /**
+     * @description GOSortPage
+     */
+    const GOSortPage = () => {
+      console.log('go to map page');
+      router.push('/phoneSort');
+    };
+
+    /**
+     * @description GOMapPage
+     */
+    const GOMapPage = () => {
+      console.log('go to map page');
+      // router.push('/phoneMap');
+    };
+
+    /**
      * @description watach city change
      * reset filter condition
      */
@@ -245,6 +264,8 @@ export default {
       currentPage,
       switchPage,
       goTop,
+      GOSortPage,
+      GOMapPage,
     };
   },
 };

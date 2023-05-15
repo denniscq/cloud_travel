@@ -1,6 +1,6 @@
 <template>
   <!-- map -->
-  <div class="map-block margin-right-10">
+  <div class="map-block hidden-xs-only">
     <img src="../assets/map-bg.jpeg" v-if="!mapFlag" />
     <el-button
       color="#002d63"
@@ -15,11 +15,11 @@
     >
   </div>
   <!-- price -->
-  <div class="filter-block margin-right-10 margin-top-10">
+  <div class="filter-block margin-top-10">
     <div class="title">
-      <p class="font-black-14 padding-left-10">Price per night</p>
-      <p
-        class="font-blue-12 padding-right-10"
+      <span class="font-black-14 padding-left-10">Price per night</span>
+      <span
+        class="font-blue-12 margin-right-10"
         @click="
           () => {
             priceRange = [0, 30000];
@@ -29,14 +29,14 @@
         "
       >
         CLEAR
-      </p>
+      </span>
     </div>
     <el-slider
       v-model="priceRange"
       range
       :max="50000"
       show-input
-      style="width: 90%; margin-left: 5%"
+      style="width: 90%; margin-left: 5%; maring-top: 10px"
       @change="changePrice($event)"
     />
     <div style="width-100">
@@ -60,7 +60,7 @@
     @filterDropdown="filter"
   />
   <!-- hotel name -->
-  <div class="filter-block margin-right-10 margin-top-10">
+  <div class="filter-block margin-top-10">
     <p style="text-align: left" class="padding-left-10">Hotel name</p>
     <div>
       <el-input

@@ -124,7 +124,6 @@ export default {
   name: 'Card',
   props: {
     cardInfo: Object,
-    id: Number,
   },
   setup(props) {
     const cardInfoRef = ref({});
